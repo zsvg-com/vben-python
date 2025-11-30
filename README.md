@@ -8,7 +8,7 @@
 * 文档地址 ：[http://8.153.168.178/doc.html](http://8.153.168.178/doc.html)
 * QQ交流群：[795417789](https://jq.qq.com/?_wv=1027&k=yoKKIlIG) （欢迎大家一起交流）
 
-
+![输入图片说明](http://8.153.168.178/gitStar.png "开源星球")
 
 # 🍟 概述
 * 特别说明：vben系列项目是由https://gitee.com/zsvg 大哥原vboot项目转移的。
