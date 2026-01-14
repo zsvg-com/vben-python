@@ -1,31 +1,40 @@
 <div align="center"><h1 align="center">vben-python</h1></div>
-<div align="center"><h3 align="center">一个开箱即用的快速开发平台Python版</h3></div>
+<div align="center"><h3 align="center">一个开箱即用的快速开发平台PYTHON版</h3></div>
 
 # 🍿 相关地址
 
-* PC端体验地址 ：[http://8.153.168.178/](http://8.153.168.178/) （演示版本采用最新vben5）
-* 移动端体验地址 ：[http://8.153.168.178/unibest/](http://8.153.168.178/unibest/) 
-* 文档地址 ：[http://8.153.168.178/doc.html](http://8.153.168.178/doc.html)
-* QQ交流群：[795417789](https://jq.qq.com/?_wv=1027&k=yoKKIlIG) （欢迎大家一起交流）
+* PC端体验地址 ：[http://8.153.168.178/](http://8.153.168.178/) 
+* 移动端体验地址 ：[http://8.153.168.178/app/](http://8.153.168.178/unibest/) 
+* 联系方式（加微信后可找小狐狸拉进交流群）：
 
-![输入图片说明](http://8.153.168.178/gitStar.png "开源星球")
+![输入图片说明](https://gitee.com/vben/vben-app/raw/master/docs/wx.jpg "微信联系方式")
+
 
 # 🍟 概述
-* 特别说明：vben系列项目是由https://gitee.com/zsvg 大哥原vboot项目转移的。
-* 特别说明：目前前端是基于vue-next-admin的，vben5 ui目前正在适配中。
-* 基于.NET8实现的快速开发平台。模块化插件式开发，前后端分离，开箱即用。
-* 后端基于Furion框架，数据库访问使用Sqlsugar，codeFirst方式。
-* 前端基于vue-next-admin/vben框架，引入了bpmn.js工作流、VForm可视化表单。
-* 前端（Element-Plus）项目地址：[https://gitee.com/vben/vben-ui](https://gitee.com/vben/vben-ui)
-* JAVA实现的同功能项目地址：[https://gitee.com/vben/vben-java](https://gitee.com/vben/vben-java) 两个项目会同步开发
+* 前端采用Vue3、Element Plus，基于vben5前端项目修改。
+* 后端参考学习的 [https://gitee.com/insistence2022/RuoYi-Vue3-FastAPI](https://gitee.com/insistence2022/RuoYi-Vue3-FastAPI) 
+* 后端采用FastAPI、sqlalchemy、MySQL（PostgreSQL）、Redis、OAuth2 & Jwt。
+* 权限认证使用OAuth2 & Jwt，支持多终端认证系统。
+* 支持加载动态权限菜单，多方式轻松权限控制。
 
-# 🏀 分层说明
+
+# ⚡ 快速启动
+
+```bash
+# 如果使用的是MySQL数据库，请执行以下命令安装项目依赖环境
+pip3 install -r requirements.txt
+
+# 配置环境
+在.env.dev文件中配置开发环境的数据库和redis
+
+# 运行sql文件
+1.新建数据库vben-python(默认，可修改)
+2.使用命令或数据库连接工具运行根目录下的vben-python.sql
+
+# 运行后端
+python3 app.py --env=dev
 ```
-├─Vben.Admin                    ->自建应用层，在此写您具体业务代码
-├─Vben.Core                    ->框架核心层
-├─Vben.Extend                  ->扩展应用层，包含通用的标准模块
-注：建议将自己的业务代码写在【Vben.Admin】层里面，可随框架升级减少冲突。
-```
+
 
 # 🍖 详细功能
 
@@ -51,13 +60,8 @@
 - [ ] 完善工作流
 
 # 💐 特别鸣谢
-- 👉 Furion：  [https://dotnetchina.gitee.io/furion](https://dotnetchina.gitee.io/furion)
-- 👉 SqlSugar：[https://gitee.com/dotnetchina/SqlSugar](https://gitee.com/dotnetchina/SqlSugar)
-- 👉 Admin.NET：[https://gitee.com/zuohuaijun/Admin.NET](https://gitee.com/zuohuaijun/Admin.NET)
-- 👉 Magic.NET：[https://gitee.com/zhengguojing/admin-net-sqlsugar](https://gitee.com/zhengguojing/admin-net-sqlsugar)
-- 👉 ZrAdminNet：[https://gitee.com/izory/ZrAdminNetCore](https://gitee.com/izory/ZrAdminNetCore)
+- 👉 insistence：[https://gitee.com/insistence2022/RuoYi-Vue3-FastAPI](https://gitee.com/insistence2022/RuoYi-Vue3-FastAPI)
 - 👉 Vben-Admin：[https://vvbin.cn/doc-next](https://vvbin.cn/doc-next)
-- 👉 vue-next-admin：[https://gitee.com/lyt-top/vue-next-admin](https://gitee.com/lyt-top/vue-next-admin)
 - 👉 vxe-table：[https://gitee.com/xuliangzhan_admin/vxe-table](https://gitee.com/xuliangzhan_admin/vxe-table)
 - 👉 VForm：[https://www.vform666.com](https://www.vform666.com/)
 
