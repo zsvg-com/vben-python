@@ -49,7 +49,7 @@ class RouterBuilder:
 
             router.hidden = not menu.shtag
             router.name = name
-            router.path = '/' + menu.path if menu.pid == 0 else menu.path
+            router.path = '/' + menu.path if (menu.pid == 0 or menu.pid == "0") else menu.path
             router.component = menu.comp
             router.query = menu.param
             router.meta = MetaVo(
@@ -67,13 +67,13 @@ class RouterBuilder:
                 router.redirect = 'noRedirect'
                 router.children = RouterBuilder.build_menus(c_menus)
 
-                if menu.pid == 0:
+                if menu.pid == 0 or menu.pid == "0":
                     router.component = 'Layout'
                 else:
                     router.component = 'ParentView'
 
             # 处理菜单框架的情况
-            elif menu.pid == 0 and "2" == menu.type and not menu.outag :
+            elif (menu.pid == 0 or menu.pid == "0") and "2" == menu.type and not menu.outag :
                 frame_name = menu.path.capitalize() + str(menu.id) if menu.path else str(menu.id)
                 router.meta = None
 

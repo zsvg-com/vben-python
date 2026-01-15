@@ -29,7 +29,7 @@ pip3 install -r requirements.txt
 
 # 运行sql文件
 1.新建数据库vben-python(默认，可修改)
-2.使用命令或数据库连接工具运行根目录下的vben-python.sql
+2.使用命令或数据库连接工具运行根目录下的vben-mysql.sql或者vben-postgre.sql
 
 # 运行后端
 python3 app.py --env=dev
