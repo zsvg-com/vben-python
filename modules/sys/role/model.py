@@ -5,14 +5,14 @@ from pydantic import BaseModel, Field
 from sqlalchemy import Column, DateTime, Integer, String, Boolean, ForeignKey
 from common.config.database import Base
 from common.annotation.pydantic_annotation import as_query
+from modules.sys.actor.model import ActorDTO
 from modules.sys.notice.big_int_type import BigIntType
-from modules.sys.org.model import OrgDTO
 
 
-class SysRoleOrg(Base):
-    __tablename__ = 'sys_role_org'
+class SysRoleActor(Base):
+    __tablename__ = 'sys_role_actor'
     rid = Column(BigIntType, ForeignKey('sys_role.id'), primary_key=True)
-    oid = Column(String(36), ForeignKey('sys_org.id'), primary_key=True)
+    aid = Column(String(36), ForeignKey('sys_actor.id'), primary_key=True)
 
 class SysRole(Base):
     __tablename__ = 'sys_role'
@@ -38,7 +38,7 @@ class RoleDTO(BaseModel):
     uptim: Optional[datetime] = Field(default=None, description='更新时间')
     cruid: Optional[str] = Field(default=None, description='创建者ID')
     upuid: Optional[str] = Field(default=None, description='更新者ID')
-    orgs: List[OrgDTO] = Field(default=None, description='包含成员')
+    actors: List[ActorDTO] = Field(default=None, description='包含成员')
 
 
 class MenuVo(BaseModel):

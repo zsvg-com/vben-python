@@ -6,7 +6,7 @@ from sqlalchemy import BigInteger, Column, DateTime, Integer
 from sqlalchemy.orm import Query, Session
 from sqlalchemy.ext.declarative import declarative_base
 
-from modules.sys.org.utils import OrmUtil
+from common.utils.utils import OrmUtil
 from common.utils.id_util import IdUtil
 
 T = TypeVar('T')

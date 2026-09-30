@@ -3,9 +3,9 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from common.config.get_db import get_db
-from modules.sys.dept.model import TreeVo
-from modules.sys.org.base import R
-from modules.sys.org.utils import TreeUtil
+from common.entity.base import R
+from common.utils.utils import TreeUtil
+from modules.sys.org.model import TreeVo
 from modules.sys.menu.model import SysMenu, MenuDTO, MenuQueryBo
 from modules.sys.menu.service import SysMenuService
 from common.utils.response_util import ResponseUtil

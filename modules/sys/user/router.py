@@ -2,13 +2,13 @@ from fastapi import APIRouter, Depends
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from common.config.get_db import get_db
-from modules.sys.dept.model import SysDept
+from modules.sys.org.model import SysOrg
 from modules.sys.user.model import SysUser, UserDTO, UserQueryBo
 from modules.sys.user.service import SysUserService
 from common.utils.page_util import PageResponseModel, PageUtil
 from common.utils.response_util import ResponseUtil
 
-router = APIRouter(prefix="/sys/user", tags=["org"])
+router = APIRouter(prefix="/sys/user", tags=["actor"])
 
 
 async def get_service(db=Depends(get_db)) -> SysUserService:
@@ -18,8 +18,8 @@ async def get_service(db=Depends(get_db)) -> SysUserService:
 @router.get('', response_model=PageResponseModel)
 async def get(bo: UserQueryBo = Depends(UserQueryBo.as_query), db: AsyncSession = Depends(get_db)):
     query = (
-        select(SysUser.id, SysUser.name, SysUser.username, SysUser.avtag, SysUser.crtim,SysDept.name.label('depna'))
-        .join(SysDept, SysDept.id == SysUser.depid)
+        select(SysUser.id, SysUser.name, SysUser.username, SysUser.avtag, SysUser.crtim,SysOrg.name.label('orgna'))
+        .join(SysOrg, SysOrg.id == SysUser.orgid)
         .where(SysUser.name.like(f'%{bo.name}%') if bo.name else True)
         .order_by(SysUser.id)
         .distinct()

@@ -30,7 +30,7 @@ class SysMenu(Base):
     shtag = Column(Boolean, nullable=True, default=True, comment='显示标记')
     catag = Column(Boolean, nullable=True, default=False, comment='缓存标记')
     outag = Column(Boolean, nullable=True, default=False, comment='外链标记')
-    # children =: List["TreeVo"] = Field(None, description="子部门")
+    # children =: List["TreeVo"] = Field(None, description="子菜单")
 
 
 class MenuDTO(BaseModel):

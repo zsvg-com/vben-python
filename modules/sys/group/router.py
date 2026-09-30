@@ -7,7 +7,7 @@ from modules.sys.group.service import SysGroupService
 from common.utils.page_util import PageResponseModel, PageUtil
 from common.utils.response_util import ResponseUtil
 
-router = APIRouter(prefix="/sys/group", tags=["org"])
+router = APIRouter(prefix="/sys/group", tags=["actor"])
 
 
 async def get_service(db=Depends(get_db)) -> SysGroupService:

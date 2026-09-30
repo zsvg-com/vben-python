@@ -7,7 +7,7 @@ from common.annotation.pydantic_annotation import as_query
 
 class SysGroupCate(Base):
     __tablename__ = 'sys_group_cate'
-    __table_args__ = {'comment': '组织架构-群组分类'}
+    __table_args__ = {'comment': '系统群组分类'}
 
     id = Column(String(36), primary_key=True, comment='主键ID')
     name = Column(String(16), nullable=True, comment='名称')

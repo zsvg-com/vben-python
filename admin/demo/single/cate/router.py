@@ -5,12 +5,12 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from admin.demo.single.cate.model import DemoSingleCate, SingleCateDTO, SingleCateQueryBo
 from admin.demo.single.cate.service import DemoSingleCateService
 from common.config.get_db import get_db
+from common.entity.base import R
 from common.utils.response_util import ResponseUtil
-from modules.sys.dept.model import TreeVo
-from modules.sys.org.base import R
-from modules.sys.org.utils import TreeUtil
+from common.utils.utils import TreeUtil
+from modules.sys.org.model import TreeVo
 
-router = APIRouter(prefix="/demo/single/cate", tags=["singlec"])
+router = APIRouter(prefix="/demo/singlec", tags=["singlec"])
 
 
 async def get_service(db=Depends(get_db)) -> DemoSingleCateService:

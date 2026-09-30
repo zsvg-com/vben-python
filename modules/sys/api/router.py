@@ -3,7 +3,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from common.config.get_db import get_db
-from modules.sys.org.base import R
+from common.entity.base import R
 from modules.sys.api.model import ApiDTO, ApiQueryBo, SysApi
 from modules.sys.api.service import SysApiService
 from common.utils.page_util import PageResponseModel, PageUtil

@@ -3,9 +3,9 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from common.config.get_db import get_db
+from common.entity.base import R
 from modules.sys.config.model import ConfigQueryBo, SysConfig, ConfigDTO
 from modules.sys.config.service import SysConfigService
-from modules.sys.org.base import R
 from common.utils.page_util import PageResponseModel, PageUtil
 from common.utils.response_util import ResponseUtil
 

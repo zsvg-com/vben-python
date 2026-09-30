@@ -3,9 +3,9 @@ from datetime import datetime
 from sqlalchemy import select, update, delete
 
 from admin.demo.single.cate.model import DemoSingleCate, SingleCateDTO
-from modules.sys.org.model import SysOrg
-from modules.sys.org.utils import OrmUtil
 from common.utils.id_util import IdUtil
+from common.utils.utils import OrmUtil
+from modules.sys.actor.model import SysActor
 
 
 class DemoSingleCateService:
@@ -18,9 +18,9 @@ class DemoSingleCateService:
         main = (await self.db.execute(select(self.model).where(self.model.id == id))).scalars().first()
         vo = OrmUtil.to_vo(main, SingleCateDTO)
         if main.cruid is not None:
-            vo.cruna = await self.db.execute(select(SysOrg.name).where(self.model.id == main.cruid)).scalars().first()
+            vo.cruna = await self.db.execute(select(SysActor.name).where(self.model.id == main.cruid)).scalars().first()
         if main.upuid is not None:
-            vo.upuna = await self.db.execute(select(SysOrg.name).where(self.model.id == main.upuid)).scalars().first()
+            vo.upuna = await self.db.execute(select(SysActor.name).where(self.model.id == main.upuid)).scalars().first()
         return vo
 
     async def insert(self, bo: SingleCateDTO):

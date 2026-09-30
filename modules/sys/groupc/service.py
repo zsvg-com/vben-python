@@ -1,7 +1,7 @@
 from sqlalchemy import select, update, delete
 
+from common.utils.utils import OrmUtil
 from modules.sys.groupc.model import SysGroupCate, GroupcDTO
-from modules.sys.org.utils import OrmUtil
 from common.utils.id_util import IdUtil
 
 

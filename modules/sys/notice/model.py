@@ -11,7 +11,7 @@ from modules.sys.notice.big_int_type import BigIntType
 
 class SysNotice(Base):
     """
-    部门表
+    系统通知
     """
     __tablename__ = 'sys_notice'
     __table_args__ = {'comment': '系统通知'}

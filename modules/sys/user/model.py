@@ -8,11 +8,11 @@ from common.annotation.pydantic_annotation import as_query
 
 class SysUser(Base):
     __tablename__ = 'sys_user'
-    __table_args__ = {'comment': '组织架构-用户'}
+    __table_args__ = {'comment': '系统用户'}
 
     id = Column(String(36), primary_key=True, comment='主键ID')
     name = Column(String(16), nullable=True, comment='姓名')
-    depid = Column(String(36), nullable=True, comment='部门id')
+    orgid = Column(String(36), nullable=True, comment='组织id')
     tier = Column(String(512), nullable=True, comment='层级')
     job = Column(String(64), nullable=True, comment='职务')
     username = Column(String(32), nullable=True, comment='登录名')
@@ -36,10 +36,10 @@ class SysUser(Base):
 class UserDTO(BaseModel):
     id: Optional[str] = Field(default=None, description='ID')
     name: Optional[str] = Field(default=None, description='姓名')
-    depid: Optional[str] = Field(default=None, description='部门id')
+    orgid: Optional[str] = Field(default=None, description='组织id')
     tier: Optional[str] = Field(default=None, description='层级')
     job: Optional[str] = Field(default=None, description='职务')
-    type: Optional[int] = Field(default=None, description='部门类型')
+    type: Optional[int] = Field(default=None, description='用户类型')
     username: Optional[str] = Field(default=None, description='登录名')
     password: Optional[str] = Field(default=None, description='密码')
     email: Optional[str] = Field(default=None, description='邮箱')

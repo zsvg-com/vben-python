@@ -9,8 +9,8 @@ from common.annotation.pydantic_annotation import as_query
 from modules.sys.notice.big_int_type import BigIntType
 
 
-class DemoSingleMain(Base):
-    __tablename__ = 'demo_single_main'
+class DemoSingle(Base):
+    __tablename__ = 'demo_single'
     __table_args__ = {'comment': '单一主表'}
 
     id = Column(BigIntType, name="id", primary_key=True, comment="主键ID", nullable=False, autoincrement=False)

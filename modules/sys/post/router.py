@@ -2,13 +2,13 @@ from fastapi import APIRouter, Depends
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from common.config.get_db import get_db
-from modules.sys.dept.model import SysDept
+from modules.sys.org.model import SysOrg
 from modules.sys.post.model import SysPost, PostDTO, PostQueryBo
 from modules.sys.post.service import SysPostService
 from common.utils.page_util import PageResponseModel, PageUtil
 from common.utils.response_util import ResponseUtil
 
-router = APIRouter(prefix="/sys/post", tags=["org"])
+router = APIRouter(prefix="/sys/post", tags=["actor"])
 
 
 async def get_service(db=Depends(get_db)) -> SysPostService:
@@ -18,8 +18,8 @@ async def get_service(db=Depends(get_db)) -> SysPostService:
 @router.get('', response_model=PageResponseModel)
 async def get(bo: PostQueryBo = Depends(PostQueryBo.as_query), db: AsyncSession = Depends(get_db)):
     query = (
-        select(SysPost.id, SysPost.name, SysPost.crtim,SysPost.notes,SysDept.name.label('depna'))
-        .join(SysDept, SysDept.id == SysPost.depid)
+        select(SysPost.id, SysPost.name, SysPost.crtim,SysPost.notes,SysOrg.name.label('orgna'))
+        .join(SysOrg, SysOrg.id == SysPost.orgid)
         .where(SysPost.name.like(f'%{bo.name}%') if bo.name else True)
         .order_by(SysPost.id)
         .distinct()

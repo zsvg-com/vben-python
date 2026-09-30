@@ -1,10 +1,10 @@
 from sqlalchemy import select, update, delete
 
-from modules.sys.org.model import SysOrg, OrgDTO
-from modules.sys.org.utils import OrmUtil
+from common.utils.utils import OrmUtil
+from modules.sys.actor.model import SysActor, ActorDTO
 from modules.sys.api.model import SysApi
 from modules.sys.menu.model import SysMenu
-from modules.sys.role.model import SysRole, RoleDTO, SysRoleOrg, MenuVo, ApiVo
+from modules.sys.role.model import SysRole, RoleDTO, SysRoleActor, MenuVo, ApiVo
 from common.utils.id_util import IdUtil
 
 
@@ -17,33 +17,33 @@ class SysRoleService:
     async def find_info(self, id: str):
         main = (await self.db.execute(select(self.model).where(self.model.id == id))).scalars().first()
         vo = OrmUtil.to_vo(main, RoleDTO)
-        query = select(SysOrg).join(SysRoleOrg, SysRoleOrg.oid == SysOrg.id).where(SysRoleOrg.rid == main.id)
+        query = select(SysActor).join(SysRoleActor, SysRoleActor.aid == SysActor.id).where(SysRoleActor.rid == main.id)
         list = (await self.db.execute(query)).scalars().all()
-        vo.orgs = []
+        vo.actors = []
         for item in list:
-            vo.orgs.append(OrmUtil.to_vo(item, OrgDTO))
+            vo.actors.append(OrmUtil.to_vo(item, ActorDTO))
         return vo
 
 
     async def insert(self,  bo: RoleDTO):
-        main = self.model(**bo.model_dump(exclude={'orgs'}))
+        main = self.model(**bo.model_dump(exclude={'actors'}))
         main.id = str(IdUtil.generate_id())
         self.db.add(main)
-        for org in bo.orgs:
-            self.db.add(SysRoleOrg(rid=main.id,oid=org.id))
+        for actor in bo.actors:
+            self.db.add(SysRoleActor(rid=main.id,aid=actor.id))
         await self.db.commit()
 
 
     async def update(self,  bo: RoleDTO):
         main_dict = bo.model_dump(exclude_unset=True)
         await self.db.execute(update(self.model), [main_dict])
-        await self.db.execute(delete(SysRoleOrg).where(SysRoleOrg.rid == main_dict['id']))
-        for org in bo.orgs:
-            self.db.add(SysRoleOrg(rid=main_dict['id'], oid=org.id))
+        await self.db.execute(delete(SysRoleActor).where(SysRoleActor.rid == main_dict['id']))
+        for actor in bo.actors:
+            self.db.add(SysRoleActor(rid=main_dict['id'], aid=actor.id))
         await self.db.commit()
 
     async def delete(self, ids: str):
-        await self.db.execute(delete(SysRoleOrg).where((SysRoleOrg.rid.in_(ids.split(',')))))
+        await self.db.execute(delete(SysRoleActor).where((SysRoleActor.rid.in_(ids.split(',')))))
         await self.db.execute(delete(self.model).where(self.model.id.in_(ids.split(','))))
         await self.db.commit()
 

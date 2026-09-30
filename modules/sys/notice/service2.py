@@ -96,7 +96,7 @@
 #     #         notice_id_list = page_object.notice_ids.split(',')
 #     #         try:
 #     #             for notice_id in notice_id_list:
-#     #                 await SysDeptDao.delete(query_db, NoticeModel(noticeId=notice_id))
+#     #                 await SysNoticeDao.delete(query_db, NoticeModel(noticeId=notice_id))
 #     #             await query_db.commit()
 #     #             return CrudResponseModel(is_success=True, message='删除成功')
 #     #         except Exception as e:

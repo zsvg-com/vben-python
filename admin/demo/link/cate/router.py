@@ -5,12 +5,12 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from admin.demo.link.cate.model import DemoLinkCate, LinkCateDTO, LinkCateQueryBo
 from admin.demo.link.cate.service import DemoLinkCateService
 from common.config.get_db import get_db
+from common.entity.base import R
 from common.utils.response_util import ResponseUtil
-from modules.sys.dept.model import TreeVo
-from modules.sys.org.base import R
-from modules.sys.org.utils import TreeUtil
+from common.utils.utils import TreeUtil
+from modules.sys.org.model import TreeVo
 
-router = APIRouter(prefix="/demo/link/cate", tags=["linkc"])
+router = APIRouter(prefix="/demo/linkc", tags=["linkc"])
 
 
 async def get_service(db=Depends(get_db)) -> DemoLinkCateService:

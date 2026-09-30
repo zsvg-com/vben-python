@@ -1,18 +1,10 @@
 from fastapi import APIRouter, Request, Depends
 from datetime import datetime, timedelta, timezone
 import jwt
-from sqlalchemy import select
-from sqlalchemy.ext.asyncio.session import AsyncSession
 
-from common.config.get_db import get_db
-from modules.auth.model import RouterBuilder
-from modules.sys.menu.model import MenuQueryBo, SysMenu, MenuDTO
-from modules.sys.org.utils import TreeUtil, OrmUtil
 from common.utils.response_util import ResponseUtil
 
 authRouter = APIRouter()
-# loginController = APIRouter()
-
 
 @authRouter.post('/auth/login')
 async def login(request: Request):
@@ -25,9 +17,9 @@ async def login(request: Request):
         "tenantId": "1",
         "userId": "1",
         "userName": "admin",
-        "deptId": 1,
-        "deptName": "维本科技",
-        "deptCategory": "1",
+        "orgid": 1,
+        "orgna": "维本科技",
+        "orgty": "1",
     }
     to_encode = data.copy()
     expire = datetime.now(timezone.utc) + timedelta(minutes=30)
@@ -39,9 +31,11 @@ async def login(request: Request):
     }
     return ResponseUtil.success(data=back)
 
+
 @authRouter.get('/test')
 async def test():
     return {'test': 'test'}
+
 
 @authRouter.get('/auth/code')
 async def code():
@@ -52,51 +46,10 @@ async def code():
     }
     return ResponseUtil.success(data=back)
 
+
 @authRouter.post('/auth/logout')
 async def code():
     return ResponseUtil.success(data=1)
-
-@authRouter.get('/system/user/getInfo')
-async def get_login_user_info():
-    userVo={
-        "userId":1,
-        "userName":"admin",
-        "nickName":"管理员",
-        "deptName":"维本科技",
-        "deptId":1,
-        "avatar":"https://vfadmin.insistence.tech/assets/profile-CuEt6NNf.jpg",
-    }
-    # userVo.userId = 1
-    # userVo.userName = "admin"
-    # userVo.nickName = "管理员"
-    # userVo.deptName = "维本科技"
-    # userVo.deptId = 1
-    # userVo.avatar = "http://8.153.168.178:8080/tool/oss/main/show?id=1978437156538343424"
-    userInfoVo ={
-        "user":userVo,
-        "permissions":["*:*:*"],
-        "roles":["superadmin"],
-    }
-    # userInfoVo.user = userVo
-    # userInfoVo.permissions = ["*:*:*"]
-    # userInfoVo.roles = ["superadmin"]
-    return ResponseUtil.success(data=userInfoVo)
-
-@authRouter.get('/system/menu/getRouters')
-async def get_routers(bo: MenuQueryBo = Depends(MenuQueryBo.as_query), db: AsyncSession = Depends(get_db)):
-    query = (
-        select(SysMenu)
-        .order_by(SysMenu.id)
-        .distinct()
-    )
-    list = (await db.execute(query)).scalars().all()
-    menus = []
-    for menu in list:
-        menus.append(OrmUtil.to_vo(menu, MenuDTO))
-    tree = TreeUtil.build_tree(menus, pid="0")
-
-
-    return ResponseUtil.success(data=RouterBuilder.build_menus(tree))
 
 # @authRouter.post('/login2', response_model=Token)
 # @Log(title='用户登录', business_type=BusinessType.OTHER, log_type='login')
@@ -124,7 +77,7 @@ async def get_routers(bo: MenuQueryBo = Depends(MenuQueryBo.as_query), db: Async
 #         data={
 #             'user_id': str(result[0].user_id),
 #             'user_name': result[0].user_name,
-#             'dept_name': result[1].dept_name if result[1] else None,
+#             'orgna': result[1].orgna if result[1] else None,
 #             'session_id': session_id,
 #             'login_info': user.login_info,
 #         },

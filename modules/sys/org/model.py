@@ -1,45 +1,68 @@
-from typing import Optional
+from datetime import datetime
+from typing import Optional, List
 
 from pydantic import BaseModel, Field
-from sqlalchemy import String, Column, Integer
-
+from sqlalchemy import CHAR, Column, DateTime, Integer, String
 from common.config.database import Base
+from common.annotation.pydantic_annotation import as_query
 
 class SysOrg(Base):
     __tablename__ = 'sys_org'
-    __table_args__ = {'comment': '组织架构-投影'}
+    __table_args__ = {'comment': '系统组织'}
 
     id = Column(String(36), primary_key=True, comment='主键ID')
-    name = Column(String(64), nullable=True, comment='名称')
-    type = Column(Integer, nullable=True, comment='类型')
+    name = Column(String(64), nullable=True, comment='组织名称')
+    pid = Column(String(36), nullable=True, comment='父组织id')
+    type = Column(Integer, nullable=True, comment='组织类型')
+    tier = Column(String(512), nullable=True, comment='层级')
+    label = Column(String(32), nullable=True, comment='标签')
+    notes = Column(String(255), nullable=True, comment='备注')
+    ornum = Column(Integer, nullable=True, comment='排序号')
+    avtag = Column(CHAR(1), nullable=True, server_default='1', comment='可用标记')
+    crtim = Column(DateTime, nullable=True, default=datetime.now(), comment='创建时间')
+    cruid = Column(String(36), nullable=True, comment='创建者')
+    uptim = Column(DateTime, nullable=True, default=datetime.now(), comment='更新时间')
+    upuid = Column(String(36), nullable=True, comment='更新者')
 
-class OrgDTO(BaseModel):
-    id: Optional[str] = Field(default=None, description='ID')
-    name: Optional[str] = Field(default=None, description='名称')
-    type: Optional[int] = Field(default=None, description='类型')
+class OrgBo(BaseModel):
+    id: Optional[str] = Field(default=None, description='组织ID')
+    name: Optional[str] = Field(default=None, description='组织名称')
+    pid: Optional[str] = Field(default=None, description='父组织id')
+    type: Optional[int] = Field(default=None, description='组织类型')
+    tier: Optional[str] = Field(default=None, description='层级')
+    label: Optional[str] = Field(default=None, description='标签')
+    notes: Optional[str] = Field(default=None, description='备注')
+    ornum: Optional[int] = Field(default=None, description='排序号')
+    avtag: Optional[bool] = Field(default=True, description='可用标记')
+    crtim: Optional[datetime] = Field(default=None, description='创建时间')
+    uptim: Optional[datetime] = Field(default=None, description='更新时间')
+    cruid: Optional[str] = Field(default=None, description='创建者ID')
+    upuid: Optional[str] = Field(default=None, description='更新者ID')
 
-def sqlalchemy_to_pydantic(org_db: SysOrg) -> OrgDTO:
-    return OrgDTO(
-        id=org_db.id,
-        name=org_db.name,
-        type=org_db.type,
-    )
+class OrgVo(BaseModel):
+    id: Optional[str] = Field(default=None, description='组织ID')
+    name: Optional[str] = Field(default=None, description='组织名称')
+    pid: Optional[str] = Field(default=None, description='父组织id')
+    type: Optional[int] = Field(default=None, description='组织类型')
+    tier: Optional[str] = Field(default=None, description='层级')
+    label: Optional[str] = Field(default=None, description='标签')
+    notes: Optional[str] = Field(default=None, description='备注')
+    ornum: Optional[int] = Field(default=None, description='排序号')
+    avtag: Optional[bool] = Field(default=True, description='可用标记')
+    crtim: Optional[datetime] = Field(default=None, description='创建时间')
+    uptim: Optional[datetime] = Field(default=None, description='更新时间')
+    cruid: Optional[str] = Field(default=None, description='创建者ID')
+    upuid: Optional[str] = Field(default=None, description='更新者ID')
 
-def pydantic_to_sqlalchemy(dto: OrgDTO) -> SysOrg:
-    return SysOrg(
-        id=dto.id,
-        name=dto.name,
-        type=dto.type,
-    )
+@as_query
+class OrgQueryBo(BaseModel):
+    name: Optional[str] = Field(default=None, description='公告标题',alias="name")
+    pageNum: int = Field(default=1, description='当前页码',alias="pageNum")
+    pageSize: int = Field(default=10, description='每页记录数',alias="pageSize")
 
-def pydantic_to_sqlalchemy2(dto: OrgDTO) -> SysOrg:
-    return SysOrg(
-        id=dto.id,
-        name=dto.name,
-        type=dto.type,
-    )
-
-class TreeMoveBo(BaseModel):
-    draid: Optional[str] = Field(default=None, description='拖动节点ID')
-    droid: Optional[str] = Field(default=None, description='放下时目标节点ID')
-    type: Optional[str] = Field(default=None, description='移动类型')
+class TreeVo(BaseModel):
+    id: Optional[str] = Field(default=None, description='组织ID')
+    name: Optional[str] = Field(default=None, description='组织名称')
+    pid: Optional[str] = Field(default=None, description='父组织id')
+    type: Optional[int] = Field(default=None, description='组织类型')
+    children: List["TreeVo"] = Field(None, description="子组织")

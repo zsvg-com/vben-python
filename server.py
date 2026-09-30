@@ -5,8 +5,8 @@ from common.config.get_db import init_create_table
 from common.config.get_redis import RedisUtil
 from common.exceptions.handle import handle_exception
 from common.middlewares.handle import handle_middleware
-from modules.pub.org.router import router as pubOrgRouter
-from modules.sys.dept.router import router as deptRouter
+from modules.pub.actor.router import router as pubActorRouter
+from modules.sys.org.router import router as orgRouter
 from modules.sys.user.router import router as userRouter
 from modules.sys.post.router import router as postRouter
 from modules.sys.group.router import router as groupRouter
@@ -17,10 +17,13 @@ from modules.sys.role.router import router as roleRouter
 from modules.sys.notice.router import noticeRoute
 from modules.sys.config.router import router as configRouter
 from modules.auth.router import authRouter
-from admin.demo.single.main.router import router as singleRouter
-from admin.demo.single.cate.router import router as singlecRouter
-from admin.demo.link.main.router import router as linkRouter
-from admin.demo.link.cate.router import router as linkcRouter
+from modules.pub.user.router import router as pubUserRouter
+from modules.pub.menu.router import router as pubMenuRouter
+from admin.routers import admin_routers
+# from admin.demo.single.main.router import router as singleRouter
+# from admin.demo.single.cate.router import router as singlecRouter
+# from admin.demo.link.main.router import router as linkRouter
+# from admin.demo.link.cate.router import router as linkcRouter
 from common.sub_applications.handle import handle_sub_applications
 from common.utils.common_util import worship
 from common.utils.log_util import logger
@@ -62,21 +65,22 @@ handle_exception(app)
 controller_list = [
     {'router': authRouter, 'tags': ['登录认证']},
     {'router': noticeRoute, 'tags': ['系统管理-通知公告管理']},
-    {'router': deptRouter},
+    {'router': orgRouter},
     {'router': userRouter},
     {'router': postRouter},
     {'router': groupRouter},
     {'router': groupcRouter},
-    {'router': pubOrgRouter},
+    {'router': pubActorRouter},
     {'router': menuRouter},
     {'router': apiRouter},
     {'router': roleRouter},
     {'router': configRouter},
-    {'router': singleRouter},
-    {'router': singlecRouter},
-    {'router': linkRouter},
-    {'router': linkcRouter},
+    {'router': pubUserRouter},
+    {'router': pubMenuRouter},
 ]
+
+controller_list.extend(admin_routers)
+
 
 for controller in controller_list:
     app.include_router(router=controller.get('router'), tags=controller.get('tags'))

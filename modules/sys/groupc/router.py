@@ -3,13 +3,13 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from common.config.get_db import get_db
-from modules.sys.dept.model import TreeVo
-from modules.sys.org.base import R
-from modules.sys.org.utils import TreeUtil
+from common.entity.base import R
+from common.utils.utils import TreeUtil
+from modules.sys.org.model import TreeVo
 from modules.sys.groupc.model import SysGroupCate, GroupcDTO
 from modules.sys.groupc.service import SysGroupCateService
 
-router = APIRouter(prefix="/sys/groupc", tags=["org"])
+router = APIRouter(prefix="/sys/groupc", tags=["actor"])
 
 
 async def get_service(db=Depends(get_db)) -> SysGroupCateService:

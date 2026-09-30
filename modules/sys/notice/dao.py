@@ -15,7 +15,7 @@ class SysNoticeDao:
         return (await db.execute(select(SysNotice).where(SysNotice.id == id))).scalars().first()
 
     @classmethod
-    async def insert(cls, db: AsyncSession, dept: SysNotice):
+    async def insert(cls, db: AsyncSession, notice: SysNotice):
         """
         新增通知公告数据库操作
 
@@ -23,18 +23,18 @@ class SysNoticeDao:
         :param notice: 通知公告对象
         :return:
         """
-        dept.id = IdUtil.generate_id()
-        dept.ornum = 1
-        dept.avtag = True
-        dept.type = 1
-        db.add(dept)
+        notice.id = IdUtil.generate_id()
+        notice.ornum = 1
+        notice.avtag = True
+        notice.type = 1
+        db.add(notice)
         await db.commit()
         # await db.flush()
 
-        return dept
+        return notice
 
     @classmethod
-    async def update(cls, db: AsyncSession, dept: dict):
+    async def update(cls, db: AsyncSession, notice: dict):
         """
         编辑通知公告数据库操作
 
@@ -42,14 +42,14 @@ class SysNoticeDao:
         :param notice: 需要更新的通知公告字典
         :return:
         """
-        await db.execute(update(SysNotice), [dept])
+        await db.execute(update(SysNotice), [notice])
 
     @classmethod
-    async def delete(cls, db: AsyncSession, dept: SysNotice):
+    async def delete(cls, db: AsyncSession, notice: SysNotice):
         """
         删除通知公告数据库操作
         """
-        await db.execute(delete(SysNotice).where(SysNotice.id.in_([dept.id])))
+        await db.execute(delete(SysNotice).where(SysNotice.id.in_([notice.id])))
 
     # @classmethod
     # async def get_notice_list(cls, db: AsyncSession, query_object: NoticePageQueryModel, is_page: bool = False):

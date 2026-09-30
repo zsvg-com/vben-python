@@ -1,6 +1,6 @@
 from sqlalchemy import select, update, delete
 
-from modules.sys.org.utils import OrmUtil
+from common.utils.utils import OrmUtil
 from modules.sys.menu.model import SysMenu, MenuDTO
 from common.utils.id_util import IdUtil
 

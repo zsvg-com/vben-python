@@ -5,17 +5,17 @@ from pydantic import BaseModel, Field
 from sqlalchemy import Column, DateTime, Integer, String, Boolean, ForeignKey
 from common.config.database import Base
 from common.annotation.pydantic_annotation import as_query
-from modules.sys.org.model import OrgDTO
+from modules.sys.actor.model import ActorDTO
 
 
-class SysGroupOrg(Base):
-    __tablename__ = 'sys_group_org'
+class SysGroupActor(Base):
+    __tablename__ = 'sys_group_actor'
     gid = Column(String(36), ForeignKey('sys_group.id'), primary_key=True)
-    oid = Column(String(36), ForeignKey('sys_org.id'), primary_key=True)
+    aid = Column(String(36), ForeignKey('sys_actor.id'), primary_key=True)
 
 class SysGroup(Base):
     __tablename__ = 'sys_group'
-    __table_args__ = {'comment': '组织架构-群组'}
+    __table_args__ = {'comment': '系统群组'}
 
     id = Column(String(36), primary_key=True, comment='主键ID')
     name = Column(String(16), nullable=True, comment='名称')
@@ -41,7 +41,7 @@ class GroupDTO(BaseModel):
     uptim: Optional[datetime] = Field(default=None, description='更新时间')
     cruid: Optional[str] = Field(default=None, description='创建者ID')
     upuid: Optional[str] = Field(default=None, description='更新者ID')
-    members: List[OrgDTO] = Field(default=None, description='包含成员')
+    members: List[ActorDTO] = Field(default=None, description='包含成员')
 
 @as_query
 class GroupQueryBo(BaseModel):
